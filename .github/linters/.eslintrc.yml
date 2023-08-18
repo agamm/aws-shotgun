@@ -1,0 +1,64 @@
+#############################
+## JavaScript Linter rules ##
+#############################
+
+parser: '@babel/eslint-parser'
+
+env:
+  node: true
+  es6: true
+  jest: true
+  commonjs: true
+
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+
+ignorePatterns:
+  - '!.*'
+  - '**/node_modules/.*'
+  - '**/dist/.*'
+  - '**/lib/.*'
+
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+  requireConfigFile: false
+
+plugins:
+  - 'jest'
+
+rules:
+  {
+    'prettier/prettier': 'error',
+    'import/no-commonjs': 'off',
+    'camelcase': 'off',
+    'i18n-text/no-en': 'off'
+  }
+
+extends:
+  - 'eslint:recommended'
+  - 'plugin:github/recommended'
+
+overrides:
+  - files:
+      - '*.json'
+    extends:
+      - plugin:jsonc/recommended-with-json
+    parser: jsonc-eslint-parser
+    parserOptions:
+      jsonSyntax: JSON
+  - files:
+      - '*.jsonc'
+    extends:
+      - plugin:jsonc/recommended-with-jsonc
+    parser: jsonc-eslint-parser
+    parserOptions:
+      jsonSyntax: JSONC
+  - files:
+      - '*.json5'
+    extends:
+      - plugin:jsonc/recommended-with-json5
+    parser: jsonc-eslint-parser
+    parserOptions:
+      jsonSyntax: JSON5
