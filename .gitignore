@@ -39,6 +39,7 @@ terraform.rc
 
 # Node.js
 node_modules
+coverage/
 
 # Notes
 notes.md
