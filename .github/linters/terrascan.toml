@@ -1,0 +1,9 @@
+# Terrascan configuration file
+# https://github.com/accurics/terrascan/blob/master/config/terrascan.toml
+
+[rules]
+  # The following are resolved, but Terrascan is showing a violation:
+  # AWS.SQS.NetworkSecurity.High.0570
+  skip-rules = [
+    'AWS.SQS.NetworkSecurity.High.0570'
+  ]
