@@ -33,7 +33,8 @@ rules:
     'prettier/prettier': 'error',
     'import/no-commonjs': 'off',
     'camelcase': 'off',
-    'i18n-text/no-en': 'off'
+    'i18n-text/no-en': 'off',
+    'no-console': 'off'
   }
 
 extends:

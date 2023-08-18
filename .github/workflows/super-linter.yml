@@ -35,6 +35,7 @@ jobs:
         id: super-linter
         uses: super-linter/super-linter/slim@v5
         env:
-          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_TERRAFORM: false
