@@ -55,6 +55,10 @@ jobs:
     name: Terraform CI
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ${{ env.TERRAFORM_DIRECTORY }}
+
     steps:
       - name: Checkout
         id: checkout

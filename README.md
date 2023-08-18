@@ -1,5 +1,9 @@
 # aws-shotgun
 
+![GitHub Super-Linter](https://github.com/agamm/aws-shotgun/actions/workflows/super-linter.yml/badge.svg)
+![Continuous Integration](https://github.com/agamm/aws-shotgun/actions/workflows/continuous-integration.yml/badge.svg)
+![Coverage](./badges/coverage.svg)
+
 Run work at scale on AWS Spot Instances.
 
 ## Prerequisites
