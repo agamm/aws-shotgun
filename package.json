@@ -2,7 +2,7 @@
   "name": "aws-shotgun",
   "description": "Run work at scale on AWS Spot Instances",
   "version": "0.1.0",
-  "author": "",
+  "author": "Agam More",
   "license": "MIT",
   "homepage": "https://github.com/agamm/aws-shotgun#readme",
   "repository": {
