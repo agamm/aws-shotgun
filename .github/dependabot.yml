@@ -1,0 +1,29 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependabot
+      - github-actions
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependabot
+      - npm
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: terraform
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependabot
+      - terraform
+    open-pull-requests-limit: 10
