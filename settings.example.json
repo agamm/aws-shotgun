@@ -1,0 +1,6 @@
+{
+  "aws_region": "us-east-1",
+  "aws_spot_instance_profile_arn": "arn:aws:iam::ACCOUNT_ID:instance-profile/ROLE_NAME",
+  "aws_spot_instance_type": "t1.micro",
+  "aws_spot_instance_max_count": 1
+}
