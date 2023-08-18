@@ -5,7 +5,7 @@
 
 terraform {
   # Default to v1.5.5 or greater.
-  required_version = ">=1.5.5"
+  required_version = ">=1.5.2"
 
   # Declare the required providers and their versions.
   required_providers {
