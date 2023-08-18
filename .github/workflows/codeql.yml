@@ -1,0 +1,45 @@
+# Perform static code analysis on JavaScript in this repository. Any security
+# vulnerabilities found will be reported on the Security tab of the repository.
+name: CodeQL
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '30 1 * * 4'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      checks: write
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        id: initialize
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Autobuild
+        id: autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        id: analyze
+        uses: github/codeql-action/analyze@v2
