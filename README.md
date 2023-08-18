@@ -1,2 +1,3 @@
 # aws-shotgun
-Run work at sacle on AWS spot instances.
+
+Run work at scale on AWS Spot Instances.
