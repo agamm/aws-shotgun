@@ -1,0 +1,55 @@
+{
+  "name": "aws-shotgun",
+  "description": "Run work at scale on AWS Spot Instances",
+  "version": "0.1.0",
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/agamm/aws-shotgun#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agamm/aws-shotgun.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agamm/aws-shotgun/issues"
+  },
+  "keywords": [
+    "aws"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "ci-test": "jest",
+    "format:write": "prettier --write src __tests__",
+    "format:check": "prettier --check src __tests__",
+    "lint": "eslint -c ./.github/linters/.eslintrc.yml",
+    "test": "(jest && make-coverage-badge --output-path ./badges/coverage.svg) || make-coverage-badge --output-path ./badges/coverage.svg",
+    "all": "npm run format:write && npm run lint && npm run test"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "./src/**"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ]
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.22.10",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.5.0",
+    "eslint-plugin-github": "^4.9.2",
+    "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-jsonc": "^2.9.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.6.2",
+    "make-coverage-badge": "^1.2.0",
+    "prettier": "^3.0.2",
+    "prettier-eslint": "^15.0.1"
+  }
+}
