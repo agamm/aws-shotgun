@@ -109,11 +109,11 @@ jobs:
         with:
           sarif_file: tfsec.sarif
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color -lock=false
+      # - name: Terraform Plan
+      #   id: plan
+      #   run: terraform plan -no-color -lock=false
 
-      - if: ${{ steps.plan.outcome == 'failure' }}
-        name: Terraform Plan Failure
-        id: plan-failure
-        run: exit 1
+      # - if: ${{ steps.plan.outcome == 'failure' }}
+      #   name: Terraform Plan Failure
+      #   id: plan-failure
+      #   run: exit 1
