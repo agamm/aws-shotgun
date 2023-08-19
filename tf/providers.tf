@@ -21,4 +21,10 @@ terraform {
 # set the AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment #
 # variables before running Terraform.                                          #
 ################################################################################
-provider "aws" {}
+provider "aws" {
+  default_tags {
+    tags = {
+      Project = "upwork"
+    }
+  }
+}
