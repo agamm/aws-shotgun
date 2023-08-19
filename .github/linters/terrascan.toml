@@ -2,8 +2,12 @@
 # https://github.com/accurics/terrascan/blob/master/config/terrascan.toml
 
 [rules]
-  # The following are resolved, but Terrascan is showing a violation:
-  # AWS.SQS.NetworkSecurity.High.0570
-  skip-rules = [
-    'AWS.SQS.NetworkSecurity.High.0570'
-  ]
+# The following are resolved, but Terrascan is showing a violation:
+# AWS.SQS.NetworkSecurity.High.0570
+# The remainder are not impacted by the current configuration.
+skip-rules = [
+  'AC_AWS_0366',
+  'AWS.LambdaFunction.Logging.0470',
+  'AWS.LambdaFunction.Logging.0472',
+  'AWS.VPC.Logging.Medium.0470',
+]
