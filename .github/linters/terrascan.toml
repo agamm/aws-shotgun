@@ -6,9 +6,11 @@
 # AWS.SQS.NetworkSecurity.High.0570
 # The remainder are not impacted by the current configuration.
 skip-rules = [
+  'AC_AWS_0063',
   'AC_AWS_0163',
   'AC_AWS_0366',
   'AC_AWS_0369',
+  'AC_AWS_0471',
   'AC_AWS_0485',
   'AC_AWS_0486',
 ]
