@@ -16,7 +16,6 @@ exports.handler = async (event, context) => {
   })
 
   // Add the URL to the queue `count` times
-  /* eslint-disable no-unused-vars */
   for (const c of Array(event.count).keys()) {
     const sqsResponse = await client.send(
       new SendMessageCommand({
@@ -27,7 +26,6 @@ exports.handler = async (event, context) => {
 
     console.log(`SQS Response: ${JSON.stringify(sqsResponse)}`)
   }
-  /* eslint-enable no-unused-vars */
 
   // Return success response
   return {

@@ -35,7 +35,8 @@ rules:
     'camelcase': 'off',
     'i18n-text/no-en': 'off',
     'no-console': 'off',
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
+    'eslint-comments/no-use': 'off'
   }
 
 extends:
