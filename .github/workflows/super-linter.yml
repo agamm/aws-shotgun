@@ -39,4 +39,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_TERRAFORM: false
+          VALIDATE_TERRAFORM_TERRASCAN: false
           VALIDATE_JSCPD: false
