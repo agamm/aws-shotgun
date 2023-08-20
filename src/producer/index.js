@@ -17,6 +17,7 @@ exports.handler = async (event, context) => {
 
   // Add the URL to the queue `count` times
   for (const c of Array(event.count).keys()) {
+    console.log(`Adding URL: ${event.url} (${c + 1} of ${event.count}))`)
     const sqsResponse = await client.send(
       new SendMessageCommand({
         QueueUrl: process.env.MESSAGE_QUEUE_URL,
