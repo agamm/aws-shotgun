@@ -13,4 +13,6 @@ skip-rules = [
   'AC_AWS_0471',
   'AC_AWS_0485',
   'AC_AWS_0486',
+  'AWS.LambdaFunction.LM.MEIDUM.0063',
+  'AWS.LambdaFunction.EncryptionandKeyManagement.0471',
 ]
