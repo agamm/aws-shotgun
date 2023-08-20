@@ -6,23 +6,23 @@
 # The AWS Lambda function that has been created.
 output "lambda_function_arn" {
   description = "The AWS Lambda function ARN"
-  value       = "TODO"
+  value       = aws_lambda_function.producer_function.arn
 }
 
 # The Amazon SQS queue that has been created.
 output "sqs_queue_arn" {
   description = "The Amazon SQS queue ARN"
-  value       = "TODO"
+  value       = aws_sqs_queue.message_queue.arn
 }
 
 # The Amazon S3 bucket that has been created.
-output "s3_bucket_arn" {
-  description = "The Amazon S3 bucket ARN"
-  value       = "TODO"
-}
+# output "s3_bucket_arn" {
+#   description = "The Amazon S3 bucket ARN"
+#   value       = aws_s3_bucket.output.arn
+# }
 
 # The spot instance request that has been created.
-output "spot_instance_request_id" {
-  description = "The spot instance request ID"
-  value       = "TODO"
-}
+# output "spot_instance_request_id" {
+#   description = "The spot instance request ID"
+#   value       = aws_spot_instance_request.spot_instances.id
+# }

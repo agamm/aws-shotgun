@@ -8,10 +8,12 @@ Run work at scale on AWS Spot Instances.
 
 ## Prerequisites
 
-| Name      | Version   |
-| --------- | --------- |
-| terraform | `1.5.5`   |
-| Node.js   | `18.16.0` |
+| Name      | Version    |
+| --------- | ---------- |
+| AWS CLIv2 | `>=2.12.1` |
+| terraform | `>=1.5.5`  |
+| Node.js   | `~18.16.0` |
+| jq        | `>=1.6`    |
 
 ## AWS Authentication
 

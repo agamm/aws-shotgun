@@ -45,4 +45,5 @@ coverage/
 notes.md
 
 # Output files
-loader.zip
+producer.zip
+output.txt
