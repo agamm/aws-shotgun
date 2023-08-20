@@ -1,4 +1,3 @@
-const request = require('then-request')
 const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
 
 /**
@@ -16,20 +15,17 @@ exports.handler = async (event, context) => {
     region: process.env.AWS_REGION
   })
 
-  // Send the request
-  const httpResponse = await request('GET', event.url)
-  console.log(`HTTP Response: ${JSON.stringify(httpResponse)}`)
+  // Add the URL to the queue `count` times
+  for (const _ of Array(event.count).keys()) {
+    const sqsResponse = await client.send(
+      new SendMessageCommand({
+        QueueUrl: process.env.MESSAGE_QUEUE_URL,
+        MessageBody: event.url
+      })
+    )
 
-  const data = httpResponse.getBody()
-
-  // Write the data to SQS
-  const sqsResponse = await client.send(
-    new SendMessageCommand({
-      QueueUrl: process.env.MESSAGE_QUEUE_URL,
-      MessageBody: data.toString()
-    })
-  )
-  console.log(`SQS Response: ${JSON.stringify(sqsResponse)}`)
+    console.log(`SQS Response: ${JSON.stringify(sqsResponse)}`)
+  }
 
   // Return success response
   return {

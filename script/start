@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd tf/ || echo "Please run from the root of the repository" && exit
+cd tf/ || $(echo "Please run from the root of the repository" && exit)
 
 # Deploy the Terraform
 terraform init
@@ -12,10 +12,11 @@ FUNCTION_ARN=$(terraform output -raw lambda_function_arn)
 echo "Received function ARN: $FUNCTION_ARN"
 
 # Read data.json, and invoke the function with each data entry as input
-for entry in $(< ../input.json jq -c -r '.[]'); do
+for entry in $(< ../input.json jq -c -r '.[] | @base64'); do
   echo "Invoking with payload: $entry"
-  # aws lambda invoke \
-  #   --function-name "$FUNCTION_ARN" \
-  #   --invocation-type "Event" \
-  #   --payload `echo '{ "url": "$entry" }' | openssl base64` /dev/null 2>&1
+
+  aws lambda invoke \
+    --function-name "$FUNCTION_ARN" \
+    --invocation-type "Event" \
+    --payload $entry /dev/null 2>&1
 done
