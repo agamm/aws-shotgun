@@ -66,6 +66,7 @@ data "archive_file" "producer_function" {
 
 # The AWS Lambda function.
 resource "aws_lambda_function" "producer_function" {
+  #ts:skip=AWS.LambdaFunction.LM.MEIDUM.0063 Only managed policies applied
   filename         = "${path.module}/../${local.producer_function_zip}"
   handler          = "index.handler"
   memory_size      = 128
