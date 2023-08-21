@@ -1,9 +1,6 @@
-{
-  "aws_region": "us-east-1",
-  "aws_spot_instance_ami": "ami-08a52ddb321b32a8c",
-  "aws_spot_instance_bid_usd": 0.005,
-  "aws_spot_instance_profile_arn": "arn:aws:iam::ACCOUNT_ID:instance-profile/ROLE_NAME",
-  "aws_spot_instance_type": "t1.micro",
-  "aws_spot_instance_max_count": 1,
-  "aws_sqs_batch_size": 10
-}
+[
+  {
+    "url": "https://cat-fact.herokuapp.com/facts",
+    "count": 10
+  }
+]
