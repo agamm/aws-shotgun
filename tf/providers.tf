@@ -21,6 +21,10 @@ terraform {
       source  = "hashicorp/null"
       version = "~> 3.2"
     }
+    cloudinit = {
+      source  = "hashicorp/cloudinit"
+      version = "~> 2.0"
+    }
   }
 }
 
@@ -30,6 +34,8 @@ terraform {
 # variables before running Terraform.                                          #
 ################################################################################
 provider "aws" {
+  region = var.aws_region
+
   default_tags {
     tags = {
       Project = "upwork"
@@ -38,3 +44,5 @@ provider "aws" {
 }
 
 provider "archive" {}
+
+provider "cloudinit" {}

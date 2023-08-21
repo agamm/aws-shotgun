@@ -1,6 +1,6 @@
 {
   "name": "aws-shotgun",
-  "description": "Run work at scale on AWS Spot Instances",
+  "description": "Consumer package for aws-shotgun",
   "version": "0.1.0",
   "author": "Agam More",
   "license": "MIT",
@@ -20,9 +20,8 @@
     "ci-test": "jest",
     "format:write": "prettier --write src __tests__",
     "format:check": "prettier --check src __tests__",
-    "lint": "eslint -c ./.github/linters/.eslintrc.yml",
-    "test": "(jest && make-coverage-badge --output-path ./badges/coverage.svg) || make-coverage-badge --output-path ./badges/coverage.svg",
-    "all": "npm run format:write && npm run lint && npm run test"
+    "test": "(jest && make-coverage-badge --output-path ../badges/consumer-coverage.svg) || make-coverage-badge --output-path ../badges/consumer-coverage.svg",
+    "all": "npm run format:write && npm run test"
   },
   "jest": {
     "testEnvironment": "node",
@@ -40,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@aws-sdk/types": "^3.391.0",
     "@babel/eslint-parser": "^7.22.10",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.5.0",
@@ -53,6 +53,8 @@
     "prettier-eslint": "^15.0.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.1440.0"
+    "@aws-sdk/client-s3": "^3.395.0",
+    "@aws-sdk/client-sqs": "^3.395.0",
+    "then-request": "^6.0.2"
   }
 }

@@ -1,18 +1,28 @@
 #!/bin/bash
 
-cd tf/ || (echo "Please run from the root of the repository" && exit)
+# Get the user data for the consumer instances
+cd consumer/ || (echo "Please run from the root of the repository" && exit)
+zip consumer.zip -r package.json src/
+CONSUMER_ZIP_BASE64=$(cat consumer.zip | base64)
+rm -f consumer.zip
 
-# Deploy the Terraform
+cd ../tf/
+
+echo "aws_spot_instance_user_data_base64 = \"$CONSUMER_ZIP_BASE64\"" >> terraform.tfvars
+
+# Deploy the Terraform stack
 terraform init
-# terraform plan -var-file ../settings.json
-terraform apply -auto-approve -var-file ../settings.json
+terraform apply -auto-approve
+sed -i '' '/aws_spot_instance_user_data_base64/d' terraform.tfvars
+
+rm -f ../producer.zip
 
 # Get the Lambda function ARN from the Terraform outputs
 FUNCTION_ARN=$(terraform output -raw lambda_function_arn)
 echo "Received function ARN: $FUNCTION_ARN"
 
 # Read data.json, and invoke the function with each data entry as input
-for entry in $(< ../input.json jq -c -r '.[] | @base64'); do
+for entry in $(< ../settings.json jq -c -r '.[] | @base64'); do
   echo "Invoking with payload: $entry"
 
   aws lambda invoke \

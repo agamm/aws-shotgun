@@ -1,0 +1,17 @@
+#cloud-config
+write_files:
+  - path: '/etc/consumer.zip'
+    permissions: '0755'
+    owner: 'root:root'
+    encoding: 'b64'
+    content: '${consumer_package}'
+
+# prettier-ignore
+runcmd:
+  - yum install nodejs -y
+  - export SQS_BATCH_SIZE="${aws_sqs_batch_size}"
+  - export SQS_QUEUE_URL="${aws_sqs_queue_url}"
+  - export S3_BUCKET_ARN="${aws_s3_bucket_arn}"
+  - unzip /etc/consumer.zip -d /etc/consumer
+  - npm --prefix /etc/consumer install /etc/consumer
+  - node /etc/consumer/src/index.js &

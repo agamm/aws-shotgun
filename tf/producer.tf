@@ -53,14 +53,14 @@ resource "null_resource" "producer_package" {
 
   provisioner "local-exec" {
     command     = "npm install"
-    working_dir = "${path.module}/../src/producer"
+    working_dir = "${path.module}/../producer"
   }
 }
 
 # Archive file for uploading to Lambda.
 data "archive_file" "producer_function" {
   type        = "zip"
-  source_dir  = "${path.module}/../src/producer"
+  source_dir  = "${path.module}/../producer"
   output_path = "${path.module}/../${local.producer_function_zip}"
 }
 
@@ -68,7 +68,7 @@ data "archive_file" "producer_function" {
 resource "aws_lambda_function" "producer_function" {
   #ts:skip=AWS.LambdaFunction.LM.MEIDUM.0063 Only managed policies applied
   filename         = "${path.module}/../${local.producer_function_zip}"
-  handler          = "index.handler"
+  handler          = "src/index.handler"
   memory_size      = 128
   function_name    = "producer"
   package_type     = "Zip"

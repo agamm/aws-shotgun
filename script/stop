@@ -1,0 +1,13 @@
+#!/bin/bash
+cd tf/ || (echo "Please run from the root of the repository" && exit)
+
+# Get the S3 bucket ARN from the Terraform outputs
+BUCKET_ARN=$(terraform output -raw s3_bucket_arn)
+echo "Received bucket ARN: $s3_bucket_arn"
+
+# List the contents of the bucket
+
+# Download the contents of the bucket
+
+# Destroy the Terraform
+terraform destroy -var-file ../tfvars.json

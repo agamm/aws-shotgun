@@ -16,13 +16,7 @@ output "sqs_queue_arn" {
 }
 
 # The Amazon S3 bucket that has been created.
-# output "s3_bucket_arn" {
-#   description = "The Amazon S3 bucket ARN"
-#   value       = aws_s3_bucket.output.arn
-# }
-
-# The spot instance request that has been created.
-# output "spot_instance_request_id" {
-#   description = "The spot instance request ID"
-#   value       = aws_spot_instance_request.spot_instances.id
-# }
+output "s3_bucket_arn" {
+  description = "The Amazon S3 bucket ARN"
+  value       = aws_s3_bucket.output.arn
+}
