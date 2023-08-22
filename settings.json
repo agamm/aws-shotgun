@@ -2,5 +2,9 @@
   {
     "url": "https://cat-fact.herokuapp.com/facts",
     "count": 10
+  },
+  {
+    "url": "https://cat-fact.herokuapp.com/facts",
+    "count": 10
   }
 ]
