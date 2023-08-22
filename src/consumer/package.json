@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "author": "Agam More",
   "license": "MIT",
+  "type": "module",
   "homepage": "https://github.com/agamm/aws-shotgun#readme",
   "repository": {
     "type": "git",
@@ -55,6 +56,8 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.395.0",
     "@aws-sdk/client-sqs": "^3.395.0",
+    "node-fetch": "^3.3.2",
+    "sqs-consumer": "^7.2.2",
     "then-request": "^6.0.2"
   }
 }
