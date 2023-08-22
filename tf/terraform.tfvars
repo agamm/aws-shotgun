@@ -1,5 +1,0 @@
-aws_region = "us-east-1"
-aws_spot_instance_bid_usd = 0.015
-aws_spot_instance_type = "t2.micro"
-aws_spot_instance_count = 2
-aws_sqs_batch_size = 10

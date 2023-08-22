@@ -19,6 +19,9 @@ aws s3 sync s3://$BUCKET_NAME/ "$WORKSPACE/output/"
 # Destroy the Terraform
 cd "$WORKSPACE/tf/"
 terraform state rm aws_s3_bucket.output
-terraform destroy -auto-approve
+terraform destroy -auto-approve -var-file ../settings.json
+
+# Delete temporary files
+rm -f ../producer.zip
 
 echo "Resources destroyed! The S3 bucket must be manually deleted."

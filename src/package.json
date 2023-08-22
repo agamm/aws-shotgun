@@ -1,0 +1,32 @@
+{
+  "name": "aws-shotgun",
+  "description": "Consumer package for aws-shotgun",
+  "version": "0.1.0",
+  "author": "Agam More",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://github.com/agamm/aws-shotgun#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agamm/aws-shotgun.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agamm/aws-shotgun/issues"
+  },
+  "keywords": [
+    "aws"
+  ],
+  "main": "index.js",
+  "devDependencies": {
+    "@aws-sdk/types": "^3.391.0",
+    "@types/node": "^20.5.0",
+    "prettier": "^3.0.2",
+    "prettier-eslint": "^15.0.1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.395.0",
+    "@aws-sdk/client-sqs": "^3.395.0",
+    "node-fetch": "^3.3.2",
+    "sqs-consumer": "^7.2.2"
+  }
+}

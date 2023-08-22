@@ -39,8 +39,8 @@ the following AWS services:
 When the Amazon EC2 Spot Instances are launched, they will automatically start
 polling SQS for messages. You can define custom processing for the response that
 is received from the target endpoint by updating
-[`src/consumer/src/index.js`](src/consumer/src/index.js#L20). By default, the
-response body is written as-is to S3.
+[`src/consumer/index.js`](src/consumer/index.js#L20). By default, the response
+body is written as-is to S3.
 
 > [!NOTE]
 >
@@ -48,9 +48,22 @@ response body is written as-is to S3.
 
 ### Step 3: Update `settings.json`
 
-The `settings.json` file defines the endpoints that will be tested. The file
-must be updated with the endpoints you want to test and the number of requests
-to send to each.
+The [`settings.json`](./settings.json) file defines the following configuration
+values:
+
+| Name                        | Description                           | Default Value |
+| --------------------------- | ------------------------------------- | ------------- |
+| `aws_region`                | AWS region to deploy to               | `us-east-1`   |
+| `aws_spot_instance_bid_usd` | Spot instance bid price (USD)         | `0.015`       |
+| `aws_spot_instance_type`    | Spot instance type                    | `t2.micro`    |
+| `aws_spot_instance_count`   | Number of spot instances              | `2`           |
+| `aws_sqs_batch_size`        | Batch size for receiving SQS messages | `10`          |
+
+### Step 4: Update `urls.json`
+
+The [`src/producer/urls.json`](./src/producer/urls.json) file defines the
+endpoints that will be tested. The file must be updated with the endpoints you
+want to test and the number of requests to send to each.
 
 ```json
 [
@@ -65,21 +78,8 @@ to send to each.
 ]
 ```
 
-The example [`settings.json`](./settings.json) is configured to test the
-[Cat Facts API](https://github.com/alexwohlbruck/cat-facts).
-
-### Step 4: Update `terraform.tfvars`
-
-The [`terraform.tfvars`](./tf/terraform.tfvars) file defines the following
-configuration values:
-
-| Name                        | Description                           | Default Value |
-| --------------------------- | ------------------------------------- | ------------- |
-| `aws_region`                | AWS region to deploy to               | `us-east-1`   |
-| `aws_spot_instance_bid_usd` | Spot instance bid price (USD)         | `0.015`       |
-| `aws_spot_instance_type`    | Spot instance type                    | `t2.micro`    |
-| `aws_spot_instance_count`   | Number of spot instances              | `2`           |
-| `aws_sqs_batch_size`        | Batch size for receiving SQS messages | `10`          |
+The example [`src/producer/urls.json`](./src/producer/urls.json) is configured
+to test the [Cat Facts API](https://github.com/alexwohlbruck/cat-facts).
 
 ### Step 5: Deploy
 
@@ -113,8 +113,8 @@ Object count:       44
 
 ### Step 7: Destroy
 
-When the message count is `0`, you can destroy the infrastructure by running the
-following command:
+When the message count is `0` and the object count is stable, you can destroy
+the infrastructure by running the following command:
 
 ```bash
 script/stop

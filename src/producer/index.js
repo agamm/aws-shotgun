@@ -1,4 +1,5 @@
-const { sendMessage } = require('./sendMessage')
+import { sendMessages } from '../utils/sendMessages.js'
+import data from './urls.json' assert { type: 'json' }
 
 /**
  * Producer script for AWS Lambda functions.
@@ -7,11 +8,11 @@ const { sendMessage } = require('./sendMessage')
  * @param {Object} context The context object
  * @return {Object} The response object
  */
-exports.handler = async (event, context) => {
-  console.log(`Event: ${JSON.stringify(event)}`)
-
-  // Send the message to the SQS queue
-  await sendMessage(event.url, event.count)
+export async function handler(event, context) {
+  // Send the messages to the SQS queue
+  for (const item of data) {
+    await sendMessages(item.url, item.count)
+  }
 
   // Return success response
   return {

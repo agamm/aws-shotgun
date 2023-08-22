@@ -1,0 +1,18 @@
+#!/bin/bash
+# WARNING: This script is intended for cleanup only. It will destroy all local
+# Terraform state information!
+WORKSPACE=$(pwd)
+
+read -p "WARNING: This script will destroy *all* local Terraform state information. Are you sure? (Y/N) " -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    # Remove local Terraform state information
+    echo "Removing local Terraform state information"
+    rm -rf "$WORKSPACE/tf/.terraform"
+    rm -f "$WORKSPACE/tf/terraform.tfstate"
+    rm -f "$WORKSPACE/tf/terraform.tfstate.backup"
+    rm -f "$WORKSPACE/tf/terraform.tfvars"
+    rm -f "$WORKSPACE/tf/.terraform.lock.hcl"
+    rm -f "$WORKSPACE/tf/*.backup"
+    echo "Done!"
+fi

@@ -1,4 +1,4 @@
-const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 
 /**
  * Sends a message to the SQS queue `count` times.
@@ -7,13 +7,13 @@ const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
  * @param {number} count The number of times to send the message
  * @return {Promise<void>}
  */
-exports.sendMessage = async (message, count) => {
+export async function sendMessages(message, count) {
   // Build the SQS client
   const client = new SQSClient({
     region: process.env.AWS_REGION
   })
 
-  // Add the URL to the queue `count` times
+  // Send the message to the queue `count` times
   for (const c of Array(count).keys()) {
     console.log(`Sending message (${c + 1} of ${count}))`)
 
