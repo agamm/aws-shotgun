@@ -1,32 +1,46 @@
 #!/bin/bash
+WORKSPACE=$(pwd)
+DEBUG=false
 
 # Get the user data for the consumer instances
-cd consumer/ || (echo "Please run from the root of the repository" && exit)
+cd "$WORKSPACE/src/consumer/" || (echo "Please run from the root of the repository" && exit)
 zip consumer.zip -r package.json src/
 CONSUMER_ZIP_BASE64=$(cat consumer.zip | base64)
 rm -f consumer.zip
 
-cd ../tf/
-
+# Set the user data in the Terraform variables
+cd "$WORKSPACE/tf/"
 echo "aws_spot_instance_user_data_base64 = \"$CONSUMER_ZIP_BASE64\"" >> terraform.tfvars
 
 # Deploy the Terraform stack
 terraform init
-terraform apply -auto-approve
+
+# In debug mode, only run the plan
+if [ "$DEBUG" = true ]; then
+  terraform plan
+else
+  terraform apply -auto-approve
+fi
+
+# Remove temporary data
 sed -i '' '/aws_spot_instance_user_data_base64/d' terraform.tfvars
 
-rm -f ../producer.zip
+# In debug mode, don't invoke the Lambda function
+if [ "$DEBUG" = true ]; then
+  exit 0
+fi
 
 # Get the Lambda function ARN from the Terraform outputs
 FUNCTION_ARN=$(terraform output -raw lambda_function_arn)
 echo "Received function ARN: $FUNCTION_ARN"
 
 # Read data.json, and invoke the function with each data entry as input
-for entry in $(< ../settings.json jq -c -r '.[] | @base64'); do
+for entry in $(< "$WORKSPACE/settings.json" jq -c -r '.[] | @base64'); do
   echo "Invoking with payload: $entry"
 
   aws lambda invoke \
     --function-name "$FUNCTION_ARN" \
     --invocation-type "Event" \
+    --no-paginate \
     --payload "$entry" /dev/null 2>&1
 done
