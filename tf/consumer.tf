@@ -1,7 +1,3 @@
-locals {
-  consumer_function_zip = "consumer.zip"
-}
-
 ###########
 # AWS IAM #
 ###########
@@ -51,6 +47,7 @@ data "cloudinit_config" "config" {
       aws_sqs_batch_size = var.aws_sqs_batch_size
       aws_sqs_queue_url  = aws_sqs_queue.message_queue.url
       aws_s3_bucket_arn  = aws_s3_bucket.output.arn
+      aws_region         = var.aws_region
 
       consumer_package = var.aws_spot_instance_user_data_base64
     })
@@ -75,25 +72,25 @@ data "aws_ami" "amazon_linux_2023" {
 
 
 # Amazon EC2 Spot Instance Request
-# resource "aws_spot_instance_request" "spot_instances" {
-#   count = var.aws_spot_instance_count
+resource "aws_spot_instance_request" "spot_instances" {
+  count = var.aws_spot_instance_count
 
-#   # Spot Instance arguments
-#   spot_price                     = var.aws_spot_instance_bid_usd
-#   spot_type                      = "one-time"
-#   wait_for_fulfillment           = false
-#   instance_interruption_behavior = "terminate"
+  # Spot Instance arguments
+  spot_price                     = var.aws_spot_instance_bid_usd
+  spot_type                      = "one-time"
+  wait_for_fulfillment           = false
+  instance_interruption_behavior = "terminate"
 
-#   # EC2 Instance arguments
-#   ami                         = data.aws_ami.amazon_linux_2023.id
-#   associate_public_ip_address = true
-#   iam_instance_profile        = aws_iam_instance_profile.consumer_profile.name
-#   instance_type               = var.aws_spot_instance_type
-#   subnet_id                   = aws_subnet.public_subnet.id
+  # EC2 Instance arguments
+  ami                         = data.aws_ami.amazon_linux_2023.id
+  associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.consumer_profile.name
+  instance_type               = var.aws_spot_instance_type
+  subnet_id                   = aws_subnet.public_subnet.id
 
-#   # TODO REMOVE
-#   key_name = "upwork"
+  # TODO REMOVE
+  key_name = "upwork"
 
-#   # User data script
-#   user_data_base64 = data.cloudinit_config.config.rendered
-# }
+  # User data script
+  user_data_base64 = data.cloudinit_config.config.rendered
+}
