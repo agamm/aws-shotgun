@@ -88,9 +88,6 @@ resource "aws_spot_instance_request" "spot_instances" {
   instance_type               = var.aws_spot_instance_type
   subnet_id                   = aws_subnet.public_subnet.id
 
-  # TODO REMOVE
-  key_name = "upwork"
-
   # User data script
   user_data_base64 = data.cloudinit_config.config.rendered
 }

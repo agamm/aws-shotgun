@@ -12,7 +12,6 @@ const app = Consumer.create({
 })
 
 app.on('error', (err) => {
-  console.error('HERE')
   console.error(err.message)
 })
 
