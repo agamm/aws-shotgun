@@ -19,10 +19,8 @@ export async function handler(messages) {
 
     // (TODO) Add your processing logic here...
 
-    // Write the response to S3
+    // Write the response to S3 and remove the message from SQS
     await writeOutput(message, body)
-
-    // Add to successfully processed messages
     processed.push(message)
   }
 
