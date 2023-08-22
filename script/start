@@ -41,6 +41,6 @@ for entry in $(< "$WORKSPACE/settings.json" jq -c -r '.[] | @base64'); do
   aws lambda invoke \
     --function-name "$FUNCTION_ARN" \
     --invocation-type "Event" \
-    --no-paginate \
+    --no-cli-pager \
     --payload "$entry" /dev/null 2>&1
 done
