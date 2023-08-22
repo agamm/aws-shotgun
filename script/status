@@ -1,0 +1,22 @@
+#!/bin/bash
+WORKSPACE=$(pwd)
+
+# Get the SQS queue and S3 bucket information from the Terraform outputs
+cd "$WORKSPACE/tf/" || (echo "Please run from the root of the repository" && exit)
+QUEUE_URL=$(terraform output -raw sqs_queue_url)
+echo "Received queue URL: $QUEUE_URL"
+BUCKET_ARN=$(terraform output -raw s3_bucket_arn)
+echo "Received bucket ARN: $BUCKET_ARN"
+BUCKET_NAME=$(echo $BUCKET_ARN | cut -d':' -f6)
+
+# Display the number of messages in the queue
+MESSAGES=$(aws sqs get-queue-attributes \
+  --queue-url "$QUEUE_URL" \
+  --attribute-names ApproximateNumberOfMessages \
+  --query 'Attributes.ApproximateNumberOfMessages' \
+  --output text)
+echo "Message count:      $MESSAGES"
+
+# Display the number of objects in the bucket
+OBJECTS=$(aws s3 ls s3://$BUCKET_NAME/ --recursive | wc -l)
+echo "Object count: $OBJECTS"
