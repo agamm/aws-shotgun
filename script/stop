@@ -1,13 +1,24 @@
 #!/bin/bash
-cd tf/ || (echo "Please run from the root of the repository" && exit)
+WORKSPACE=$(pwd)
+
+cd "$WORKSPACE/tf/" || (echo "Please run from the root of the repository" && exit)
 
 # Get the S3 bucket ARN from the Terraform outputs
 BUCKET_ARN=$(terraform output -raw s3_bucket_arn)
-echo "Received bucket ARN: $s3_bucket_arn"
+echo "Received bucket ARN: $BUCKET_ARN"
+BUCKET_NAME=$(echo $BUCKET_ARN | cut -d':' -f6)
 
 # List the contents of the bucket
+OBJECTS=$(aws s3 ls s3://$BUCKET_NAME/ --recursive | wc -l)
+echo "Object count: $OBJECTS"
 
 # Download the contents of the bucket
+mkdir -p "$WORKSPACE/output/"
+aws s3 sync s3://$BUCKET_NAME/ "$WORKSPACE/output/"
 
 # Destroy the Terraform
-terraform destroy -var-file ../tfvars.json
+cd "$WORKSPACE/tf/"
+terraform state rm aws_s3_bucket.output
+terraform destroy -auto-approve
+
+echo "Resources destroyed! The S3 bucket must be manually deleted."
