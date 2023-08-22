@@ -53,14 +53,14 @@ resource "null_resource" "producer_package" {
 
   provisioner "local-exec" {
     command     = "npm install"
-    working_dir = "${path.module}/../producer"
+    working_dir = "${path.module}/../src/producer"
   }
 }
 
 # Archive file for uploading to Lambda.
 data "archive_file" "producer_function" {
   type        = "zip"
-  source_dir  = "${path.module}/../producer"
+  source_dir  = "${path.module}/../src/producer"
   output_path = "${path.module}/../${local.producer_function_zip}"
 }
 

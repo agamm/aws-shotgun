@@ -12,6 +12,7 @@ runcmd:
   - export SQS_BATCH_SIZE="${aws_sqs_batch_size}"
   - export SQS_QUEUE_URL="${aws_sqs_queue_url}"
   - export S3_BUCKET_ARN="${aws_s3_bucket_arn}"
+  - export AWS_REGION="${aws_region}"
   - unzip /etc/consumer.zip -d /etc/consumer
   - npm --prefix /etc/consumer install /etc/consumer
-  - node /etc/consumer/src/index.js &
+  - node /etc/consumer/src/consumer.js &

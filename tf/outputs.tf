@@ -10,9 +10,9 @@ output "lambda_function_arn" {
 }
 
 # The Amazon SQS queue that has been created.
-output "sqs_queue_arn" {
-  description = "The Amazon SQS queue ARN"
-  value       = aws_sqs_queue.message_queue.arn
+output "sqs_queue_url" {
+  description = "The Amazon SQS queue URL"
+  value       = aws_sqs_queue.message_queue.url
 }
 
 # The Amazon S3 bucket that has been created.

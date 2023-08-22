@@ -31,6 +31,7 @@ variable "aws_spot_instance_count" {
 variable "aws_spot_instance_user_data_base64" {
   description = "The base64-encoded user data to provide to the spot instances."
   type        = string
+  default     = ""
 }
 
 variable "aws_sqs_batch_size" {
