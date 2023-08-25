@@ -5,7 +5,7 @@
 # Output bucket.
 # This is not destroyed on cleanup!
 resource "aws_s3_bucket" "output" {
-  bucket_prefix = "output"
+  bucket_prefix = "aws-shotgun-output"
 }
 
 # Ownership controls for output bucket.
