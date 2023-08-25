@@ -4,7 +4,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
  * Writes output to Amazon S3
  *
  * @param {import('@aws-sdk/types').Message} message The SQS message
- * @param {string} output The output to write
+ * @param {object} output The output to write
  * @return {void}
  */
 export async function writeOutput(message, output) {

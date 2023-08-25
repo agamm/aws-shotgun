@@ -3,7 +3,7 @@ import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 /**
  * Sends a message to the SQS queue `count` times.
  *
- * @param {string} message The message to send
+ * @param {object} message The message to send
  * @return {Promise<void>}
  */
 export async function sendMessage(message) {
@@ -15,7 +15,7 @@ export async function sendMessage(message) {
   const sqsResponse = await client.send(
     new SendMessageCommand({
       QueueUrl: process.env.MESSAGE_QUEUE_URL,
-      MessageBody: message
+      MessageBody: JSON.stringify(message)
     })
   )
 

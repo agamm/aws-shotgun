@@ -14,7 +14,7 @@ const app = Consumer.create({
 
     for (const message of messages) {
       // Call the user-defined handler
-      const body = await handler(message)
+      const body = await handler(JSON.parse(message.Body))
 
       // Write the output to S3
       await writeOutput(message, body)

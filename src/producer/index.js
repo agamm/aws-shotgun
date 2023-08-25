@@ -11,7 +11,7 @@ import data from './urls.json' assert { type: 'json' }
 export async function handler(event, context) {
   // Send the urls to the SQS queue
   for (const url of data) {
-    await sendMessage(url)
+    await sendMessage({ url: url })
   }
 
   // Return success response
