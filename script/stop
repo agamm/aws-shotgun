@@ -27,7 +27,7 @@ echo "Bucket contents copied to $WORKSPACE/output/"
 rm -f ../producer.zip
 rm -f ../consumer.zip
 
-read -p "WARNING: Do you want to delete **all** the AWS resources? (Y/N) " -r
+read -p "WARNING: Do you want to delete **all** (including S3 results) the AWS resources? (Y/N) " -r
 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
