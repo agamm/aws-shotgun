@@ -39,12 +39,11 @@ the following AWS services:
 When the Amazon EC2 Spot Instances are launched, they will automatically start
 polling SQS for messages. You can define custom processing for the response that
 is received from the target endpoint by updating
-[`src/consumer/index.js`](src/consumer/index.js#L20). By default, the response
-body is written as-is to S3.
+[`src/consumer/index.js`](src/consumer/index.js#L20). This handler is invoked
+for each message that is processed, and should return the JSON object that will
+be written to S3.
 
-> [!NOTE]
->
-> Make sure that your custom logic runs **before** the `writeOutput` function.
+Initially, the response body is written as-is to S3.
 
 ### Step 3: Update `settings.json`
 
