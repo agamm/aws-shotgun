@@ -1,9 +1,15 @@
 #!/bin/bash
 WORKSPACE=$(pwd)
 
-cd "$WORKSPACE/tf/" || (echo "Please run from the root of the repository" && exit)
+# Get the user data for the consumer instances
+cd "$WORKSPACE/src/" || (echo "Please run from the root of the repository" && exit)
+zip ../consumer.zip -r consumer/ utils/ package.json
+
+# Set the user data in the Terraform variables
+export TF_VAR_aws_spot_instance_user_data_base64=$(cat ../consumer.zip | base64)
 
 # Get the S3 bucket ARN from the Terraform outputs
+cd "$WORKSPACE/tf/"
 BUCKET_ARN=$(terraform output -raw s3_bucket_arn)
 echo "Received bucket ARN: $BUCKET_ARN"
 BUCKET_NAME=$(echo $BUCKET_ARN | cut -d':' -f6)
@@ -23,5 +29,6 @@ terraform destroy -auto-approve -var-file ../settings.json
 
 # Delete temporary files
 rm -f ../producer.zip
+rm -f ../consumer.zip
 
 echo "Resources destroyed! The S3 bucket must be manually deleted."
