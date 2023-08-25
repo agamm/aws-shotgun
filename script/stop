@@ -21,14 +21,22 @@ echo "Object count: $OBJECTS"
 # Download the contents of the bucket
 mkdir -p "$WORKSPACE/output/"
 aws s3 sync s3://$BUCKET_NAME/ "$WORKSPACE/output/"
-
-# Destroy the Terraform
-cd "$WORKSPACE/tf/"
-terraform state rm aws_s3_bucket.output
-terraform destroy -auto-approve -var-file ../settings.json
+echo "Bucket contents copied to $WORKSPACE/output/"
 
 # Delete temporary files
 rm -f ../producer.zip
 rm -f ../consumer.zip
 
-echo "Resources destroyed! The S3 bucket must be manually deleted."
+read -p "WARNING: Do you want to delete **all** the AWS resources? (Y/N) " -r
+
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+
+  # Destroy the Terraform
+  cd "$WORKSPACE/tf/"
+  terraform destroy -auto-approve -var-file ../settings.json
+
+  echo "Resources destroyed!"
+fi
+
+echo "Complete!"
