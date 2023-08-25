@@ -1,10 +1,12 @@
 [
-  {
-    "url": "https://cat-fact.herokuapp.com/facts",
-    "count": 10
-  },
-  {
-    "url": "https://cat-fact.herokuapp.com/facts",
-    "count": 10
-  }
+  "http://httpbin.org/get",
+  "https://jsonplaceholder.typicode.com/posts/1",
+  "https://api.github.com/users/username",
+  "http://api.openweathermap.org/data/2.5/weather?q=cityname&appid=API_KEY",
+  "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY",
+  "https://thecatapi.com/api/images/get",
+  "https://restcountries.com/v3.1/name/countryCode",
+  "https://baconipsum.com/api/?type=meat-and-filler",
+  "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY",
+  "https://randomuser.me/api/"
 ]
