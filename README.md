@@ -1,6 +1,36 @@
 # aws-shotgun
 
-Run work at scale on AWS Spot Instances.
+Run large-scale tasks on AWS Spot Instances.
+
+## Introduction
+
+Have you ever needed to perform tasks on a large scale, but felt constrained by
+the limitations of serverless Lambda functions in terms of CPU/memory and
+execution time? If so, you're in the right place.
+
+**aws-shotgun** offers a solution that's particularly effective for:
+
+- Handling a high volume of HTTP requests
+- Large-scale web scraping
+- CPU-intensive tasks on a large scale
+
+The best part? It leverages AWS Spot Instances, allowing you to maximize cost
+savings.
+
+## Key Concepts
+
+To get started with **aws-shotgun**, you need to understand two basic concepts:
+the Producer and the Consumers.
+
+**Producer**: This is a Lambda function responsible for sending inputs to an SQS
+queue.
+
+**Consumers**: These are AWS Spot Instances that retrieve tasks from the queue,
+execute the tasks, and then store the results in S3 buckets.
+
+With **aws-shotgun**, you don't need to worry about setting up or cleaning up
+the infrastructure. Your main focus remains on defining the business logic that
+you want to execute at scale. So, let's dive in and start using **aws-shotgun**!
 
 ## Prerequisites
 
@@ -15,14 +45,17 @@ Run work at scale on AWS Spot Instances.
 
 ### Step 1: AWS Authentication
 
-Make sure to set the following environment variables before running any
-Terraform commands:
+It is preferable to create a fresh account so you don't mix this infra with your
+other running aws environments. Make sure to set the following environment
+variables before running any Terraform commands:
 
 ```bash
 export AWS_ACCESS_KEY_ID="<your access key>"
 export AWS_SECRET_ACCESS_KEY="<your secret key>"
 export AWS_REGION="<your region>"
 ```
+
+or `aws configure`
 
 Your AWS account must have permissions to create/update/destroy resources for
 the following AWS services:
@@ -59,27 +92,13 @@ values:
 | `aws_spot_instance_count`   | Number of spot instances              | `2`           |
 | `aws_sqs_batch_size`        | Batch size for receiving SQS messages | `10`          |
 
-### Step 4: Update `urls.json`
+### Step 4: Update `src/producer/index.js`
 
-The [`src/producer/urls.json`](./src/producer/urls.json) file defines the
-endpoints that will be tested. The file must be updated with the endpoints you
-want to test and the number of requests to send to each.
-
-```json
-[
-  {
-    "url": "<url to test>",
-    "count": <number of requests to send>
-  },
-  {
-    "url": "<url to test>",
-    "count": <number of requests to send>
-  }
-]
-```
+The [`src/producer/urls.json`](./src/producer/urls.json) is where you define the
+inputs to your consumers.
 
 The example [`src/producer/urls.json`](./src/producer/urls.json) is configured
-to test the [Cat Facts API](https://github.com/alexwohlbruck/cat-facts).
+to send http requests to several mock API endpoints.
 
 ### Step 5: Deploy
 
