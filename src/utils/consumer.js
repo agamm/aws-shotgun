@@ -1,7 +1,6 @@
 import { Consumer } from 'sqs-consumer'
 import { SQSClient } from '@aws-sdk/client-sqs'
 import { handler } from '../consumer/index.js'
-import { writeOutput } from './writeOutput.js'
 
 /**
  * Consumer app for Amazon EC2 Spot Instances.
@@ -14,10 +13,7 @@ const app = Consumer.create({
 
     for (const message of messages) {
       // Call the user-defined handler
-      const body = await handler(JSON.parse(message.Body))
-
-      // Write the output to S3
-      await writeOutput(message, body)
+      await handler(JSON.parse(message.Body))
 
       // Add the message to the processed list
       processed.push(message)

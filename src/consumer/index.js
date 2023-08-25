@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import { writeOutput } from '../utils/writeOutput.js'
 
 /**
  * This script is the handler that performs any manipulation of the message
@@ -6,7 +7,7 @@ import fetch from 'node-fetch'
  * be written to the S3 bucket.
  *
  * @param {object} message The SQS message body as a JSON object
- * @return {object} The processed data to write to S3
+ * @return {void}
  */
 export async function handler(message) {
   // Make the request
@@ -17,6 +18,6 @@ export async function handler(message) {
 
   // (TODO) Add your processing logic here...
 
-  // Return the output that will be written to S3
-  return body
+  // Write the output to S3
+  await writeOutput(message, body)
 }
