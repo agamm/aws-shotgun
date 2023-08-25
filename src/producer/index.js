@@ -1,4 +1,4 @@
-import { sendMessages } from '../utils/sendMessages.js'
+import { sendMessage } from '../utils/sendMessage.js'
 import data from './urls.json' assert { type: 'json' }
 
 /**
@@ -9,9 +9,9 @@ import data from './urls.json' assert { type: 'json' }
  * @return {Object} The response object
  */
 export async function handler(event, context) {
-  // Send the messages to the SQS queue
-  for (const item of data) {
-    await sendMessages({url: item})
+  // Send the urls to the SQS queue
+  for (const url of data) {
+    await sendMessage(url)
   }
 
   // Return success response

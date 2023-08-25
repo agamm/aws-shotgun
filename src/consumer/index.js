@@ -10,7 +10,7 @@ import fetch from 'node-fetch'
  */
 export async function handler(message) {
   // Make the request
-  const response = await fetch(message.url)
+  const response = await fetch(message.Body)
 
   // Get the response body as JSON
   const body = await response.json()

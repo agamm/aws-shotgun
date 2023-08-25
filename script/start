@@ -11,13 +11,12 @@ fi
 # Get the user data for the consumer instances
 cd "$WORKSPACE/src/" || (echo "Please run from the root of the repository" && exit)
 zip ../consumer.zip -r consumer/ utils/ package.json
-CONSUMER_ZIP_BASE64=$(cat ../consumer.zip | base64)
 
 # Set the user data in the Terraform variables
-cd "$WORKSPACE/tf/"
-echo "aws_spot_instance_user_data_base64 = \"$CONSUMER_ZIP_BASE64\"" >> terraform.tfvars
+export TF_VAR_aws_spot_instance_user_data_base64=$(cat ../consumer.zip | base64)
 
 # Deploy the Terraform stack
+cd "$WORKSPACE/tf/"
 terraform init
 
 # In debug mode, only run the plan
@@ -33,7 +32,6 @@ if [ "$DEBUG" = true ]; then
 fi
 
 # Remove temporary data
-sed -i '' '/aws_spot_instance_user_data_base64/d' terraform.tfvars
 rm -f ../consumer.zip
 rm -f ../producer.zip
 
