@@ -73,7 +73,8 @@ data "aws_ami" "amazon_linux_2023" {
 
 # Amazon EC2 Spot Instance Request
 resource "aws_spot_instance_request" "spot_instances" {
-  count = var.aws_spot_instance_count
+  depends_on = [aws_internet_gateway.igw]
+  count      = var.aws_spot_instance_count
 
   # Spot Instance arguments
   spot_price                     = var.aws_spot_instance_bid_usd

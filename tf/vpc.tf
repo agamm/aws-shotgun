@@ -34,7 +34,8 @@ resource "aws_internet_gateway" "igw" {
 
 # Route table for public subnets.
 resource "aws_route_table" "route_table" {
-  vpc_id = aws_vpc.vpc.id
+  depends_on = [aws_internet_gateway.igw]
+  vpc_id     = aws_vpc.vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
