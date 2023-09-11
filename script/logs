@@ -1,0 +1,51 @@
+#!/bin/bash
+
+LOG_DIR="logs"
+
+mkdir -p "$LOG_DIR"
+
+
+LOG_GROUP="/aws/lambda/producer"
+
+# Get the latest log stream for the specified log group
+LOG_STREAM=$(aws logs describe-log-streams \
+  --log-group-name "$LOG_GROUP" \
+  --max-items 1 \
+  --order-by LastEventTime \
+  --descending \
+  --query "logStreams[].logStreamName" \
+  --output text | head -n 1)
+
+if [ -n "$LOG_STREAM" ]; then
+  LOG_FILE="$LOG_DIR/producer.log"
+
+  # Download the log events from the specified log stream
+  aws logs get-log-events \
+    --log-group-name "$LOG_GROUP" \
+    --log-stream-name "$LOG_STREAM" \
+    --query "events[].message" \
+    --output text > "$LOG_FILE"
+
+  echo "Downloaded producer log for $LOG_STREAM to $LOG_FILE"
+else
+  echo "No log streams found for $LOG_GROUP"
+fi
+
+# Get a list of EC2 instance IDs
+INSTANCE_IDS=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].InstanceId" --filters Name=instance-state-name,Values=running --output text)
+
+# Loop through the instance IDs and download logs for each
+for INSTANCE_ID in $INSTANCE_IDS; do
+    LOG_FILE="$LOG_DIR/$INSTANCE_ID.log"
+
+    # Capture the system logs for the instance
+    output=$(aws ec2 get-console-output --instance-id "$INSTANCE_ID" --query "Output" --output text)
+
+    # Check if the output is not None before redirecting it to the log file
+    if [ "$output" != "None" ]; then
+        echo "$output" > "$LOG_FILE"
+        echo "Downloaded consumer log for $INSTANCE_ID to $LOG_FILE"
+    else
+        echo "Empty consumer log for $INSTANCE_ID"
+    fi
+done

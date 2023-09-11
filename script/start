@@ -2,10 +2,34 @@
 WORKSPACE=$(pwd)
 DEBUG=false
 
-# Check if there is an existing Terraform state
-if test -f "$WORKSPACE/tf/terraform.tfstate"; then
-  echo "Terraform state exists. Remove any .tfstate, .lock.hcl, and .terraform data."
-  exit 1
+# Check if there is an existing Terraform state file
+if [ -f "$WORKSPACE/tf/terraform.tfstate" ]; then
+  # Get the list of resources in the Terraform state
+  resource_list=$(terraform state list -state="tf/terraform.tfstate")
+
+  # Check if the resource list is empty
+  if [ -z "$resource_list" ]; then
+    echo "Terraform state contains no resources."
+    read -p "Remove the empty Terraform state? (y/n): " confirm
+    if [ "$confirm" == "y" ]; then
+      rm -rf "$WORKSPACE/tf/.terraform"
+      rm -f "$WORKSPACE/tf/terraform.tfstate"
+      rm -f "$WORKSPACE/tf/terraform.tfstate.backup"
+      rm -f "$WORKSPACE/tf/terraform.tfvars"
+      rm -f "$WORKSPACE/tf/.terraform.lock.hcl"
+      rm -f "$WORKSPACE/tf/*.backup"
+      echo "Terraform state removed."
+    else
+      echo "Terraform state removal canceled."
+      echo "Please remove any .tfstate, .lock.hcl, and .terraform data."
+      exit 1
+    fi
+  else
+    echo "Terraform state contains the following resources:"
+    echo "$resource_list"
+    echo "Please remove your existing resources."
+    exit 1
+  fi
 fi
 
 # Get the user data for the consumer instances

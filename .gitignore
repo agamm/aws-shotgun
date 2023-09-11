@@ -44,3 +44,4 @@ consumer.zip
 producer.zip
 output.txt
 output/
+logs/
