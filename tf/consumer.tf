@@ -48,6 +48,7 @@ data "cloudinit_config" "config" {
       aws_sqs_queue_url  = aws_sqs_queue.message_queue.url
       aws_s3_bucket_arn  = aws_s3_bucket.output.arn
       aws_region         = var.aws_region
+      fetch_timeout      = var.fetch_timeout
 
       consumer_package = var.aws_spot_instance_user_data_base64
     })

@@ -38,3 +38,9 @@ variable "aws_sqs_batch_size" {
   type        = number
   default     = 10
 }
+
+variable "fetch_timeout" {
+  description = "Timeout in milliseconds for fetch requests to specified urls."
+  type        = number
+  default     = 10000
+}

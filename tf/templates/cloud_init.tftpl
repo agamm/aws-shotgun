@@ -13,6 +13,7 @@ runcmd:
   - export SQS_QUEUE_URL="${aws_sqs_queue_url}"
   - export S3_BUCKET_ARN="${aws_s3_bucket_arn}"
   - export AWS_REGION="${aws_region}"
+  - export FETCH_TIMEOUT="${fetch_timeout}"
   - unzip /etc/consumer.zip -d /etc/consumer
   - npm --prefix /etc/consumer install /etc/consumer
   - node /etc/consumer/utils/consumer.js &

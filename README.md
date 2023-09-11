@@ -28,6 +28,8 @@ queue.
 **Consumers**: These are AWS Spot Instances that retrieve tasks from the queue,
 execute the tasks, and then store the results in S3 buckets.
 
+![Flow Chart](https://i.imgur.com/qpGFq5x.png)
+
 With **aws-shotgun**, you don't need to worry about setting up or cleaning up
 the infrastructure. Your main focus remains on defining the business logic that
 you want to execute at scale. So, let's dive in and start using **aws-shotgun**!
@@ -83,13 +85,14 @@ Initially, the response body is written as-is to S3.
 The [`settings.json`](./settings.json) file defines the following configuration
 values:
 
-| Name                        | Description                           | Default Value |
-| --------------------------- | ------------------------------------- | ------------- |
-| `aws_region`                | AWS region to deploy to               | `us-east-1`   |
-| `aws_spot_instance_bid_usd` | Spot instance bid price (USD)         | `0.015`       |
-| `aws_spot_instance_type`    | Spot instance type                    | `t2.micro`    |
-| `aws_spot_instance_count`   | Number of spot instances              | `2`           |
-| `aws_sqs_batch_size`        | Batch size for receiving SQS messages | `10`          |
+| Name                        | Description                                     | Default Value |
+| --------------------------- | -------------------------------------           | ------------- |
+| `aws_region`                | AWS region to deploy to                         | `us-east-1`   |
+| `aws_spot_instance_bid_usd` | Spot instance bid price (USD)                   | `0.015`       |
+| `aws_spot_instance_type`    | Spot instance type                              | `t2.micro`    |
+| `aws_spot_instance_count`   | Number of spot instances                        | `2`           |
+| `aws_sqs_batch_size`        | Batch size for receiving SQS messages (Max: 10) | `10`          |
+| `fetch_timeout`             | Timeout in ms for fetch requests                | `10000`       |
 
 ### Step 4: Update `src/producer/index.js`
 
