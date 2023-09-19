@@ -1,25 +1,16 @@
 import { Consumer } from 'sqs-consumer'
 import { SQSClient } from '@aws-sdk/client-sqs'
 import { handler } from '../consumer/index.js'
+import fetch from 'node-fetch'
 
 /**
  * Consumer app for Amazon EC2 Spot Instances.
  */
 const app = Consumer.create({
   queueUrl: process.env.SQS_QUEUE_URL,
-  batchSize: parseInt(process.env.SQS_BATCH_SIZE, 1),
+  batchSize: Math.min(parseInt(process.env.SQS_BATCH_SIZE), 10),
   handleMessageBatch: async (messages) => {
-    const processed = []
-
-    for (const message of messages) {
-      // Call the user-defined handler
-      await handler(JSON.parse(message.Body))
-
-      // Add the message to the processed list
-      processed.push(message)
-    }
-
-    return processed
+    await handler(messages);
   },
   sqs: new SQSClient({
     region: process.env.AWS_REGION
@@ -35,3 +26,13 @@ app.on('processing_error', (err) => {
 })
 
 app.start()
+
+export async function fetchWithTimeout(url, timeout) {  
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  const response = await fetch(url, { signal: controller.signal });
+  clearTimeout(timeoutId);
+
+  return response;
+}

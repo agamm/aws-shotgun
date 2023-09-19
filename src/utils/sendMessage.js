@@ -1,21 +1,21 @@
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
+import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 
 /**
  * Sends a message to the SQS queue `count` times.
  *
- * @param {object} message The message to send
+ * @param {object} messageBatch The message batch to send
  * @return {Promise<void>}
  */
-export async function sendMessage(message) {
+export async function sendMessage(messageBatch) {
   // Build the SQS client
   const client = new SQSClient({
     region: process.env.AWS_REGION
   })
 
   const sqsResponse = await client.send(
-    new SendMessageCommand({
+    new SendMessageBatchCommand({
       QueueUrl: process.env.MESSAGE_QUEUE_URL,
-      MessageBody: JSON.stringify(message)
+      Entries: messageBatch
     })
   )
 
