@@ -10,14 +10,28 @@ import { writeOutput } from '../utils/writeOutput.js'
  * @return {void}
  */
 export async function handler(message) {
-  // Make the request
-  const response = await fetch(message.url)
+  try {
+    // Make the request
+    await timeout(200 * Math.random())
+    const response = await fetch(`https://${message.url}`)
 
-  // Get the response body as JSON
-  const body = await response.json()
+    // Write the output to S3
+    if (response.ok) {
+      await writeOutput(urlToFileString(message.url), message.url)
+    }
+  } catch (error) {
+    console.error('An error occurred:', error)
+  }
+}
 
-  // (TODO) Add your processing logic here...
+function urlToFileString(url) {
+  let urlWithoutProtocol = url.replace('https://', '').replace('http://', '')
+  let fileCompatibleString = urlWithoutProtocol
+    .replace(/\//g, '-')
+    .replace(/\./g, '_')
+  return fileCompatibleString
+}
 
-  // Write the output to S3
-  await writeOutput(message, body)
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }

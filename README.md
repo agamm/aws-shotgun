@@ -145,3 +145,11 @@ destroy the infrastructure.
 >
 > The S3 bucket is not deleted by default. You must delete the bucket manually
 > after destroying the infrastructure.
+
+## TODO
+
+- Show better status
+- Show errors in ec2
+- Local test run on 5 random samples
+- Price estimation.
+- Spot fleet instead of normal requests

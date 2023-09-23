@@ -7,7 +7,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
  * @param {object} output The output to write
  * @return {void}
  */
-export async function writeOutput(message, output) {
+export async function writeOutput(name, output) {
   // Build the S3 client
   const client = new S3Client({
     region: process.env.AWS_REGION
@@ -18,7 +18,7 @@ export async function writeOutput(message, output) {
     new PutObjectCommand({
       Body: JSON.stringify(output),
       Bucket: process.env.S3_BUCKET_ARN.split(':::')[1],
-      Key: `${message.MessageId}.json`
+      Key: `${name}.json`
     })
   )
 

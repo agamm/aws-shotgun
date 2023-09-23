@@ -39,4 +39,6 @@ then
   echo "Resources destroyed!"
 fi
 
+
+"$WORKSPACE/script/cleanup"
 echo "Complete!"

@@ -44,3 +44,6 @@ consumer.zip
 producer.zip
 output.txt
 output/
+
+*.csv
+script/download

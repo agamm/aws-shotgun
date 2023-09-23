@@ -15,4 +15,4 @@ runcmd:
   - export AWS_REGION="${aws_region}"
   - unzip /etc/consumer.zip -d /etc/consumer
   - npm --prefix /etc/consumer install /etc/consumer
-  - node /etc/consumer/utils/consumer.js &
+  - node /etc/consumer/utils/consumer.js 2>&1 | tee -a /tmp/log.txt &

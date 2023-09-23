@@ -15,8 +15,8 @@ MESSAGES=$(aws sqs get-queue-attributes \
   --attribute-names ApproximateNumberOfMessages \
   --query 'Attributes.ApproximateNumberOfMessages' \
   --output text)
-echo "Message count:      $MESSAGES"
+echo "SQS Message count:      $MESSAGES"
 
 # Display the number of objects in the bucket
 OBJECTS=$(aws s3 ls s3://$BUCKET_NAME/ --recursive | wc -l)
-echo "Object count: $OBJECTS"
+echo "S3 Object count: $OBJECTS"
