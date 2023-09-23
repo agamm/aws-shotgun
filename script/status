@@ -1,6 +1,8 @@
 #!/bin/bash
 WORKSPACE=$(pwd)
 
+echo "Time: $(date +"%H:%M:%S")"
+
 # Get the SQS queue and S3 bucket information from the Terraform outputs
 cd "$WORKSPACE/tf/" || (echo "Please run from the root of the repository" && exit)
 QUEUE_URL=$(terraform output -raw sqs_queue_url)

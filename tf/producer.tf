@@ -81,7 +81,7 @@ resource "aws_lambda_function" "producer_function" {
   role             = aws_iam_role.producer_role.arn
   runtime          = "nodejs18.x"
   source_code_hash = data.archive_file.producer_function.output_base64sha256
-  timeout          = 60
+  timeout          = 900
 
   # Environment variable with SQS queue URL.
   environment {
