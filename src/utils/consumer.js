@@ -10,7 +10,7 @@ const app = Consumer.create({
   queueUrl: process.env.SQS_QUEUE_URL,
   batchSize: Math.min(parseInt(process.env.SQS_BATCH_SIZE), 10),
   handleMessageBatch: async (messages) => {
-    await handler(messages);
+    await handler(messages)
   },
   sqs: new SQSClient({
     region: process.env.AWS_REGION
@@ -27,12 +27,15 @@ app.on('processing_error', (err) => {
 
 app.start()
 
-export async function fetchWithTimeout(url, timeout) {  
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeout);
+export async function fetchWithTimeout(url, timeout, fetchOptions) {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
 
-  const response = await fetch(url, { signal: controller.signal });
-  clearTimeout(timeoutId);
+  const response = await fetch(url, {
+    signal: controller.signal,
+    ...fetchOptions
+  })
+  clearTimeout(timeoutId)
 
-  return response;
+  return response
 }
